@@ -17,7 +17,6 @@ if (isset($_POST['update'])) {
     }
     exit;
 } else {
-    // Jika file ini diakses langsung tanpa POST
     header("Location: read.php");
     exit;
 }
