@@ -32,7 +32,6 @@
         <div class="col-12 mb-3">
             <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
         </div>
-        <!-- Notifikasi -->
         <?php if (isset($_GET['pesan'])): ?>
             <?php
             $pesan = $_GET['pesan'];
@@ -52,7 +51,6 @@
     </form>
 
     <?php
-    // Proses tambah data
     if (isset($_POST['submit'])) {
         $nama = $_POST['nama'];
         $alamat = $_POST['alamat'];
@@ -67,8 +65,6 @@
             echo "<div class='alert alert-danger'>Gagal menambahkan data: " . mysqli_error($conn) . "</div>";
         }
     }
-
-    // Tampilkan data supplier
     $sql = "SELECT * FROM supplier";
     $result = mysqli_query($conn, $sql);
 
@@ -88,7 +84,6 @@
             <tbody>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                     <?php if (isset($_GET['edit']) && $_GET['edit'] == $row['kd_supplier']): ?>
-                        <!-- Form edit -->
                         <tr>
                             <form method="POST" action="update.php">
                                 <input type="hidden" name="kd_supplier" value="<?= $row['kd_supplier'] ?>">
@@ -112,7 +107,6 @@
                             <td><?= $row['telephon'] ?></td>
                             <td>
                                 <a href="read.php?edit=<?= $row['kd_supplier'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                                <!-- <a href="delete.php?kd_supplier=<?= $row['kd_supplier'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</a> -->
                                 <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="<?= $row['kd_supplier'] ?>">Hapus</a>
                             </td>
                         </tr>
@@ -126,10 +120,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    // Ketika tombol dengan class btn-delete diklik
     document.querySelectorAll('.btn-delete').forEach(button => {
         button.addEventListener('click', function(e) {
-            e.preventDefault(); // Supaya gak langsung jalanin link
+            e.preventDefault();
 
             const userId = this.getAttribute('data-id');
 
@@ -144,7 +137,6 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Arahkan ke delete.php jika konfirmasi OK
                     window.location.href = `delete.php?kd_supplier=${userId}`;
                 }
             });
